@@ -5,16 +5,18 @@ import math
 # --- 見た目の設定（CSS） ---
 st.markdown("""
     <style>
-    /* 「dBmを入力してください」の文字を大きく、青くする */
+    /* 入力欄のラベル（dBmを入力してください）を大きく、太く、青くする */
     .stNumberInput label {
-        font-size: 24px !important;
-        color: #1E90FF !important; /* 道しるべのような青色 */
-        font-weight: bold;
+        font-size: 32px !important; /* さらに大きくしました */
+        color: #1E90FF !important;
+        font-weight: 800 !important; /* より太くしました */
+        line-height: 1.5;
     }
-    /* 入力枠そのものを大きく、枠線を青くする */
+    /* 入力枠内の数字そのものを大きくする */
     div[data-baseweb="input"] {
-        font-size: 24px !important;
-        border: 2px solid #1E90FF !important;
+        height: 60px !important; /* 枠自体を少し高くしました */
+        font-size: 28px !important;
+        border: 3px solid #1E90FF !important; /* 枠線を少し太くしました */
         border-radius: 10px;
     }
     </style>
@@ -23,10 +25,10 @@ st.markdown("""
 st.title('📡 デシベル計算アプリ')
 st.markdown("---")
 
-# 入力（文字と枠が大きくなります）
+# 入力
 dbm_in = st.number_input("dBmを入力してください", value=33.0)
 
-# 計算（中身は変わりません）
+# 計算
 mw_val = 10 ** (dbm_in / 10)
 w_val = mw_val / 1000
 v_val = math.sqrt(mw_val * 50 / 1000)
