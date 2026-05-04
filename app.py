@@ -34,7 +34,7 @@ st.markdown("""
 # 右上にクレジットを表示
 st.markdown('<p class="credit">開発/制作：緒方</p>', unsafe_allow_html=True)
 
-st.title('📡 dBm→dBμV変換アプリ')
+st.title('📡 dBm → dBμV 変換アプリ')
 st.markdown("---")
 
 # 入力
