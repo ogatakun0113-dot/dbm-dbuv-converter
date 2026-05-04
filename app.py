@@ -1,26 +1,38 @@
-
 import streamlit as st
 import math
+
+# --- ページ設定 ---
+st.set_page_config(page_title="デシベル計算アプリ", layout="centered")
 
 # --- 見た目の設定（CSS） ---
 st.markdown("""
     <style>
-    /* 入力欄のラベル（dBmを入力してください）を大きく、太く、青くする */
+    /* クレジット表示用のCSS */
+    .credit {
+        text-align: right;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: -20px;
+    }
+    /* 入力欄のラベルを大きく、太く、青くする */
     .stNumberInput label {
-        font-size: 32px !important; /* さらに大きくしました */
+        font-size: 32px !important;
         color: #1E90FF !important;
-        font-weight: 800 !important; /* より太くしました */
+        font-weight: 800 !important;
         line-height: 1.5;
     }
     /* 入力枠内の数字そのものを大きくする */
     div[data-baseweb="input"] {
-        height: 60px !important; /* 枠自体を少し高くしました */
+        height: 60px !important;
         font-size: 28px !important;
-        border: 3px solid #1E90FF !important; /* 枠線を少し太くしました */
+        border: 3px solid #1E90FF !important;
         border-radius: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
+
+# 右上にクレジットを表示
+st.markdown('<p class="credit">開発/制作：緒方</p>', unsafe_allow_html=True)
 
 st.title('📡 デシベル計算アプリ')
 st.markdown("---")
