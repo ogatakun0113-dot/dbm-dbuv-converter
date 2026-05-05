@@ -51,8 +51,6 @@ with col_opt2:
     mode = st.radio("入力単位を選択", ["dBm を入力", "dBμV を入力"], horizontal=True)
 
 # オフセット値の計算
-# dBμV = dBm + 120 + 10*log10(Z/1000) * 2 ※電圧比なので20logに相当する処理
-# 50Ω時: 107.0 / 75Ω時: 108.8
 offset = 120 + 10 * math.log10(impedance / 1000.0)
 
 st.markdown("---")
@@ -66,16 +64,14 @@ if mode == "dBm を入力":
     dbm_val = dbm_in
     dbuv_val = dbm_in + offset
 else:
-    # デフォルト値を50Ω時の0dBm相当(107.0)にする
     dbuv_in = st.number_input(f"電圧レベル (dBμV)", value=offset, format="%.2f", step=1.0)
     dbuv_val = dbuv_in
     dbm_val = dbuv_in - offset
 
-# 電圧(V)の実効値計算
-# P(W) = 10^((dBm-30)/10)
-# V = sqrt(P * Z)
+# 電力(W)および電圧(V)の計算
 mw_val = 10 ** (dbm_val / 10)
-v_val = math.sqrt((mw_val / 1000.0) * impedance)
+w_val = mw_val / 1000.0
+v_val = math.sqrt(w_val * impedance)
 
 # --- 3. 結果表示 ---
 st.markdown('<div class="result-box">', unsafe_allow_html=True)
@@ -84,11 +80,14 @@ st.subheader(f"📊 変換結果 ({impedance}Ω系)")
 c1, c2 = st.columns(2)
 with c1:
     st.metric("電力 (dBm)", f"{dbm_val:.2f} dBm")
-    st.metric("電圧 (V)", f"{v_val:,.6f} V")
+    # 電力をW単位で小数点以下3桁表示
+    st.metric("電力 (W)", f"{w_val:.3f} W")
 with c2:
     st.metric("電圧レベル (dBμV)", f"{dbuv_val:.2f} dBμV")
-    st.metric("電力 (mW)", f"{mw_val:,.4f} mW")
+    # 電圧をV単位で小数点以下3桁表示
+    st.metric("電圧 (V)", f"{v_val:.3f} V")
 
+st.write(f"（参考）電力 (mW): **{mw_val:,.4f} mW**")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # 補足情報
@@ -99,6 +98,6 @@ with st.expander("ℹ️ 換算式と定数について"):
     - **$dBm = dB\mu V - {offset:.1f}$**
     
     ※0dBm (1mW) 時の電圧レベル：
-    - 50Ω系: 約 107.0 dBμV (0.2236 V)
-    - 75Ω系: 約 108.8 dBμV (0.2739 V)
+    - 50Ω系: 約 107.0 dBμV (0.224 V)
+    - 75Ω系: 約 108.8 dBμV (0.274 V)
     """)
