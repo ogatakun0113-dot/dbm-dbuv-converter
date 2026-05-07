@@ -84,8 +84,8 @@ with c1:
     st.metric("電力 (W)", f"{w_val:.3f} W")
 with c2:
     st.metric("電圧レベル (dBμV)", f"{dbuv_val:.2f} dBμV")
-    # 電圧をV単位で小数点以下3桁表示
-    st.metric("電圧 (V)", f"{v_val:.3f} V")
+    # 電圧をV単位で小数点以下4桁表示
+    st.metric("電圧 (V)", f"{v_val:.4f} V")
 
 st.write(f"（参考）電力 (mW): **{mw_val:,.4f} mW**")
 st.markdown('</div>', unsafe_allow_html=True)
